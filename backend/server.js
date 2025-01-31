@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 //express app
 const app = express()
 
-//middleware
+//middlewareGG
 
 app.use(express.json())
 
