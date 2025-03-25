@@ -1,20 +1,22 @@
 require('dotenv').config()
 
 const express = require('express')
-const cors = require('cors') // ✅ import CORS
+const cors = require('cors') 
 const taskRoutes = require("./routes/task")
 const mongoose = require('mongoose')
+const reportRoutes = require('./routes/report');
+
 
 // express app
 const app = express()
 
-// ✅ middleware to allow frontend requests
+
 app.use(cors())
 
 // middleware to parse JSON
 app.use(express.json())
 
-// custom logger middleware (optional)
+app.use('/api/report', reportRoutes);
 app.use((req, res, next) => {
   console.log(req.path, req.method)
   next()
@@ -27,7 +29,7 @@ app.get("/", (req, res) => {
   res.json({ msg: "Welcome to Task Planner" })
 })
 
-// connect to MongoDB and start server
+// connect to MongoDB
 mongoose.connect(process.env.MONG_URI)
   .then(() => {
     app.listen(process.env.PORT, () => {

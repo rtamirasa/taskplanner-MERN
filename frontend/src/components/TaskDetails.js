@@ -5,12 +5,12 @@ const TaskDetails = ({ task, onStatusUpdate }) => {
 
   const handleCheckboxChange = async (e) => {
     if (task.status === 'Completed') {
-      // Delete the task
+      // Delete task
       await fetch(`http://localhost:4000/api/tasks/${task._id}`, {
         method: 'DELETE',
       });
     } else {
-      // Mark as completed
+      // completed
       await fetch(`http://localhost:4000/api/tasks/${task._id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
@@ -18,7 +18,7 @@ const TaskDetails = ({ task, onStatusUpdate }) => {
       });
     }
 
-    // Refresh tasks in parent
+    // Refresh 
     onStatusUpdate();
   };
 

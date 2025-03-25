@@ -28,7 +28,7 @@ const TaskDetails = ({ task, onTaskChange }) => {
       <p><strong>Due Date:</strong> {formatDate(task.dueDate)}</p>
       <p><strong>Category:</strong> {task.category}</p>
 
-      {/* Checkbox for completion */}
+      {/* Checkbox */}
       <label style={{ display: 'block', marginTop: '1rem' }}>
         <input
           type="checkbox"
@@ -45,7 +45,7 @@ const TaskDetails = ({ task, onTaskChange }) => {
         </span>
       </p>
 
-      {/* Show delete only if task is completed */}
+      {/* delete if task done */}
       {task.status === 'Completed' && (
         <button
           onClick={handleDelete}
