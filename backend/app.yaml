@@ -1,0 +1,11 @@
+runtime: nodejs18
+
+instance_class: F1
+
+env_variables:
+  MONG_URI: "mongodb+srv://rtami:Rain.123@cluster0.pgnjb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+  PORT: 4000
+
+handlers:
+  - url: /.*
+    script: auto

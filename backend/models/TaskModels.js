@@ -31,5 +31,13 @@ const taskSchema = new Schema({
         default: Date.now, 
     },
 });
+
+taskSchema.index({ status: 1 });
+taskSchema.index({ dueDate: 1 });
+taskSchema.index({ category: 1 });
+
+
+
+
 module.exports = mongoose.model('Task', taskSchema);
 //Tasks.find()
