@@ -4,7 +4,7 @@ const TaskDetails = ({ task, onTaskChange }) => {
   const handleStatusChange = async (e) => {
     const newStatus = e.target.checked ? "Completed" : "Pending";
 
-    await fetch(`http://localhost:4000/api/tasks/${task._id}`, {
+    await fetch(`https://cs348taskplanner.uc.r.appspot.com/api/tasks/${task._id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status: newStatus })
@@ -14,7 +14,7 @@ const TaskDetails = ({ task, onTaskChange }) => {
   };
 
   const handleDelete = async () => {
-    await fetch(`http://localhost:4000/api/tasks/${task._id}`, {
+    await fetch(`https://cs348taskplanner.uc.r.appspot.com/api/tasks/${task._id}`, {
       method: 'DELETE'
     });
 
@@ -28,7 +28,6 @@ const TaskDetails = ({ task, onTaskChange }) => {
       <p><strong>Due Date:</strong> {formatDate(task.dueDate)}</p>
       <p><strong>Category:</strong> {task.category}</p>
 
-      {/* Checkbox */}
       <label style={{ display: 'block', marginTop: '1rem' }}>
         <input
           type="checkbox"
@@ -45,7 +44,6 @@ const TaskDetails = ({ task, onTaskChange }) => {
         </span>
       </p>
 
-      {/* delete if task done */}
       {task.status === 'Completed' && (
         <button
           onClick={handleDelete}

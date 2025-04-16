@@ -12,7 +12,7 @@ const TaskForm = ({ onTaskCreated }) => {
 
     const task = { title, description, dueDate, category, status };
 
-    const res = await fetch('http://localhost:4000/api/tasks', {
+    const res = await fetch('https://cs348taskplanner.uc.r.appspot.com/api/tasks', {
       method: 'POST',
       body: JSON.stringify(task),
       headers: { 'Content-Type': 'application/json' }

@@ -14,13 +14,12 @@ import {
 
 const Report = () => {
   const [summaryData, setSummaryData] = useState([]);
-  const [allTasks, setAllTasks] = useState([]);
+  const [categoryData, setCategoryData] = useState([]);
   const [filter, setFilter] = useState('all');
 
-  // preprocessed
   const fetchSummary = async (filterValue) => {
     try {
-      const res = await fetch(`http://localhost:4000/api/report/status-summary?filter=${filterValue}`);
+      const res = await fetch(`https://cs348taskplanner.uc.r.appspot.com/api/report/status-summary?filter=${filterValue}`);
       const data = await res.json();
       if (res.ok && Array.isArray(data)) {
         const formatted = data.map(item => ({
@@ -34,50 +33,27 @@ const Report = () => {
     }
   };
 
-  // Fetch all tasks
-  const fetchTasks = async () => {
+  const fetchCategorySummary = async (filterValue) => {
     try {
-      const res = await fetch('http://localhost:4000/api/tasks');
+      const res = await fetch(`https://cs348taskplanner.uc.r.appspot.com/api/report/category-summary?filter=${filterValue}`);
       const data = await res.json();
       if (res.ok && Array.isArray(data)) {
-        setAllTasks(data);
+        const formatted = data.map(item => ({
+          name: item._id,
+          value: item.count
+        }));
+        setCategoryData(formatted);
       }
     } catch (error) {
-      console.error('Failed to fetch tasks:', error);
+      console.error('Failed to fetch category summary:', error);
     }
   };
 
   useEffect(() => {
-    fetchSummary(filter);  // refetch
+    fetchSummary(filter);
+    fetchCategorySummary(filter);
   }, [filter]);
 
-  useEffect(() => {
-    fetchTasks(); // fetch all 
-  }, []);
-
-  // Filter tasks by due date 
-  const getFilteredTasks = () => {
-    if (filter === 'week') {
-      const oneWeekAgo = new Date();
-      oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-      return allTasks.filter(task => new Date(task.dueDate) >= oneWeekAgo);
-    }
-    return allTasks;
-  };
-
-  // Pie Chart 
-  const getCategoryData = () => {
-    const counts = {};
-    getFilteredTasks().forEach(task => {
-      counts[task.category] = (counts[task.category] || 0) + 1;
-    });
-    return Object.entries(counts).map(([category, count]) => ({
-      name: category,
-      value: count
-    }));
-  };
-
-  const categoryData = getCategoryData();
   const pieColors = ['#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
 
   return (
@@ -86,7 +62,6 @@ const Report = () => {
         Task Summary
       </Typography>
 
-      {/* Filter*/}
       <FormControl sx={{ minWidth: 200, marginBottom: 3 }} size="small">
         <InputLabel>Filter</InputLabel>
         <Select
@@ -99,7 +74,6 @@ const Report = () => {
         </Select>
       </FormControl>
 
-      {/* Bar Chart*/}
       {summaryData.length > 0 ? (
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={summaryData}>
@@ -108,9 +82,9 @@ const Report = () => {
             <YAxis allowDecimals={false} />
             <Tooltip />
             <Bar dataKey="count">
-              <Cell fill="#ff9800" /> {/* Pending */}
-              <Cell fill="#2196f3" /> {/* In Progress */}
-              <Cell fill="#4caf50" /> {/* Completed */}
+              <Cell fill="#ff9800" />
+              <Cell fill="#2196f3" />
+              <Cell fill="#4caf50" />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
@@ -118,7 +92,6 @@ const Report = () => {
         <Typography>No task summary data available.</Typography>
       )}
 
-      {/* Pie Chart */}
       {categoryData.length > 0 && (
         <>
           <Typography variant="h6" fontWeight="bold" mt={5}>

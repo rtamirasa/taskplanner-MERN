@@ -9,7 +9,7 @@ const Home = () => {
 
   const fetchTasks = async () => {
     try {
-      const res = await fetch('http://localhost:4000/api/tasks');
+      const res = await fetch('https://cs348taskplanner.uc.r.appspot.com/api/tasks');
       const data = await res.json();
       console.log("Fetched tasks:", data);
       if (res.ok) {

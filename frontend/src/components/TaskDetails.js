@@ -6,12 +6,12 @@ const TaskDetails = ({ task, onStatusUpdate }) => {
   const handleCheckboxChange = async (e) => {
     if (task.status === 'Completed') {
       // Delete task
-      await fetch(`http://localhost:4000/api/tasks/${task._id}`, {
+      await fetch(`https://cs348taskplanner.uc.r.appspot.com/api/tasks/${task._id}`, {
         method: 'DELETE',
       });
     } else {
       // completed
-      await fetch(`http://localhost:4000/api/tasks/${task._id}`, {
+      await fetch(`https://cs348taskplanner.uc.r.appspot.com/api/tasks/${task._id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: 'Completed' }),
