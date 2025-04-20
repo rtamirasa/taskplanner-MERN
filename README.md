@@ -1,7 +1,6 @@
 # Task Planner Web App
 
-Task Planner is a fully responsive full-stack web application built using the MERN stack (MongoDB, Express, React, Node.js). This project includes features such as task creation, completion tracking, visual reports, and category breakdowns, making it a strong example of full-stack web development.
-
+Task Planner is a fully responsive full-stack web application built using the MERN stack (MongoDB, Express, React, Node.js). This project includes features such as task creation, completion tracking, visual reports, and category breakdowns
 ## About the Project
 
 ### Key Features
